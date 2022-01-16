@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "AllShoes";
+}
+
+<Div>
+    @foreach (var item in Model)
+    {
+        <div>@item.BrandName , @item.Company , @item.Size , @item.Price</div>
+    }
+</Div>
+
