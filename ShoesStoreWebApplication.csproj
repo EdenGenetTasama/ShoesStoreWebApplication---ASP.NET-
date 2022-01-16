@@ -149,6 +149,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\api\OutShoesController.cs" />
+    <Compile Include="Controllers\api\SportShoesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ShoeController.cs" />
     <Compile Include="Global.asax.cs">
