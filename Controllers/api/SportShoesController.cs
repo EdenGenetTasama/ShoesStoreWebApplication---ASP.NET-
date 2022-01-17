@@ -92,10 +92,14 @@ namespace ShoesStoreWebApplication.Controllers.api
                 using (SqlConnection dbConext = new SqlConnection(conectionString))
                 {
                     dbConext.Open();
-                    string query = @"INSERT INTO SportShoes (Company , BrandName)";
+                    string query = $@"INSERT INTO SportShoes (Company , BrandName , Price , Size) VALUES ('{shoe.Company}','{shoe.BrandName}',{shoe.Price},{shoe.Size})";
+                    SqlCommand sqlCommand = new SqlCommand(query, dbConext);
+                    sqlCommand.ExecuteNonQuery();
+                    dbConext.Close();
 
+                    return Ok("ADDED");
                 }
-                return Ok();
+                return NotFound();
             }
             catch (SqlException ex)
             {
@@ -110,11 +114,22 @@ namespace ShoesStoreWebApplication.Controllers.api
         }
 
         // PUT: api/SpoetShoes/5
-        public IHttpActionResult Put(int id, [FromBody] string value)
+        public IHttpActionResult Put(int id, [FromBody] SportShoe shoe)
         {
             try
             {
-                return Ok();
+                //Company , BrandName , Price , Size
+                using (SqlConnection dbConext = new SqlConnection(conectionString))
+                {
+                    dbConext.Open();
+                    string query = $@"UPDATE SportShoes
+                                      SET Company = '{shoe.Company}' , BrandName = '{shoe.BrandName}' , Price = {shoe.Size} , Size ={shoe.Price}
+                                       WHERE Id={id}";
+                    SqlCommand commend = new SqlCommand(query, dbConext);
+                    commend.ExecuteNonQuery();
+                    return Ok("Added");
+                }
+                return NotFound();
             }
             catch (SqlException ex)
             {
@@ -133,7 +148,16 @@ namespace ShoesStoreWebApplication.Controllers.api
         {
             try
             {
-                return Ok();
+                using (SqlConnection connection = new SqlConnection(conectionString))
+                {
+                    connection.Open();
+                    string deleteQuery = $@"DELETE FROM SportShoes WHERE Id={id}";
+                    SqlCommand sqlCommand = new SqlCommand(deleteQuery, connection);
+                    sqlCommand.ExecuteNonQuery();
+                    return Ok("DELETE");
+
+                }
+                return NotFound();
             }
             catch (SqlException ex)
             {
